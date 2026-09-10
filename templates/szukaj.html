@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block tytul %}Produkty – Sklep 4TP{% endblock %}
+{% block tresc %}
+<h2>Wyniki wyszukiwania dla: "{{ fraza }}"</h2>
+{% if liczba_wynikow > 0 %}
+    <p>Znaleziono wyników: <strong>{{ liczba_wynikow }}</strong></p>
+    <ul>
+        {% for produkt in wyniki %}
+            <li>{{ produkt }}</li>
+        {% endfor %}    
+    </ul>
+{% else %}
+    <p>Brak wyników spełniających kryteria wyszukiwania.</p>
+{% endif %}
+<p><a href="{{ url_for('index') }}">Powrót do strony głównej</a></p>
+{% endblock %}

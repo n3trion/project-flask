@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block tytul %}Produkty – Sklep 4TP{% endblock %}
+{% block tresc %}
+<h1>Sklep 4TP</h1>
+    <p>Witaj, {{ imie }}!</p>
+    <p>Nazwą tego projektu jest {{ nazwa }}</p>
+    {% if zalogowany %}
+        <p>Witaj ponownie!</p>
+    {% else %}
+        <p><a href="/login">Zaloguj się</a></p>
+    {% endif %}
+    {% if rola == "admin" %}
+        <a href="/admin">Panel</a>
+    {% elif rola == "sprzedawca" %}
+        <a href="/magazyn">Magazyn</a>
+    {% endif %}
+    {% if produkty %} <!-- pusta lista = False -->
+        ...
+    {% else %}
+        <p>Brak produktów.</p>
+    {% endif %}
+
+{% endblock %}

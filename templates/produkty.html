@@ -1,0 +1,19 @@
+
+{% extends "base.html" %}
+{% block tytul %}Produkty – Sklep 4TP{% endblock %}
+{% block tresc %}
+<h1>Produkty ({{ lista|length }})</h1>
+<table> 
+    <tr><th>#</th><th>Nazwa</th><th>Cena</th><th>Status</th></tr>
+    {% for p in lista %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>
+                <a href="{{ url_for('lista', id=p.id) }}">{{ p.nazwa }}</a>
+            </td>
+            <td>{{ p.cena }} zł</td>
+            <td>{% if p.dostepny %}dostępny{% else %}<b>brak</b>{% endif %}</td>
+        </tr>
+    {% endfor %}
+</table>
+{% endblock %}

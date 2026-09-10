@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block tytul %}Produkty – Sklep 4TP{% endblock %}
+{% block tresc %}
+<h2>Dodaj nowy produkt</h2>
+<form action="{{ url_for('dodaj1') }}" method="POST">
+    <label for="nazwa_nazwa">Nazwa produktu:</label>
+    <input type="text" id="nazwa" name="nazwa_produktu" placeholder="Wpisz nazwę..." required> <br>
+    <label for="cena_cena">Cena produktu:</label>
+    <input type="float" id="cena" name="cena_produktu" placeholder="Wpisz cenę..." required><br>
+    <label  label for="status">Status produktu:</label>
+    <select id="status" name="status_produktu">
+    <option value="true">dostępny</option>
+    <option value="false">brak</option>
+    </select>
+    <button type="submit">Dodaj do listy</button>
+</form>
+
+<p><a href="{{ url_for('lista') }}">Anuluj i wróć do listy</a></p>
+
+{% endblock %}

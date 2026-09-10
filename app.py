@@ -1,8 +1,6 @@
-from flask import Flask,request,url_for,redirect,abort,Response
+from flask import Flask,request,url_for,redirect,abort,Response, render_template
 app = Flask(__name__)
-@app.route("/")
-def index():
-    return "Hello WOrld!"
+
 
 @app.route("/o-nas") 
 def onas():
@@ -72,14 +70,6 @@ def stary():
     return redirect(url_for("powitanie"))
 
 
-PRODUKTY = {1: "Laptop", 2: "Mysz", 3: "Klawiatura"}
-@app.route("/produktb/<int:id>")
-def produktb(id):
-    if id not in PRODUKTY:
-        abort(404)
-    return f"Produkt: {PRODUKTY[id]}"
-
-
 
 @app.route("/tabliczka/<int:n>")
 def tabliczka(n):
@@ -91,8 +81,8 @@ def tabliczka(n):
 
 
 
-@app.route("/produkty")
-def produkty():
+@app.route("/produkty123")
+def produkty123():
     kategoria = request.args.get("kat", "wszystkie")
     sortowanie = request.args.get("sort", "domyslnie")
     return f"Kategoria: {kategoria}, sortowanie: {sortowanie}"
@@ -116,5 +106,43 @@ def start():
 
 
 
+@app.route("/")
+def index():
+    return render_template("index.html", imie="Pavlo", zalogowany=True, rola="admin", nazwa="Flask")
+
+PRODUKTY = [
+ {"id": 1, "nazwa": "Laptop", "cena": 2999, "dostepny": True},
+ {"id": 2, "nazwa": "Mysz", "cena": 49, "dostepny": False},
+ {"id": 3, "nazwa": "Klawiatura", "cena": 199, "dostepny": True},
+]
+@app.route("/lista")
+def lista():
+ return render_template("produkty.html",lista=PRODUKTY)
+ 
+@app.route("/szukaj")
+def szukaj():
+    baza_produktow = ["Laptop", "Mysz bezprzewodowa", "Klawiatura mechaniczna"]
+    fraza = request.args.get('q', '').strip()
+    wyniki = [p for p in baza_produktow if fraza.lower() in p.lower()] if fraza else[]
+    liczba_wynikow = len(wyniki)
+    return render_template("szukaj.html", fraza=fraza, wyniki=wyniki, liczba_wynikow=liczba_wynikow)
+
+@app.route("/dodaj1", methods=["GET", "POST"])
+def dodaj1():
+    if request.method == "POST":
+        nowa_nazwa = request.form.get("nazwa_produktu", "").strip()
+        cena = request.form.get("cena_produktu", "").strip()
+        status_wybor = request.form.get("status_produktu", "true").strip()
+        jest_dostepny = True if status_wybor == "true" else False
+        if nowa_nazwa:
+            nowy_obiekt_produktu = {
+                "id": len(PRODUKTY) + 1,
+                "nazwa": nowa_nazwa,
+                "cena": cena,
+                "dostepny": jest_dostepny
+            }
+            PRODUKTY.append(nowy_obiekt_produktu)
+        return redirect(url_for("lista"))    
+    return render_template("dodaj1.html")
 if __name__ == "__main__":
     app.run(debug=True)
