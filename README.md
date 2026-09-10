@@ -49,12 +49,23 @@ def produkty():
 ## struktura
 
 flask-start/
+
 app.py                  # Główny plik aplikacji Flask (konfiguracja, trasy, logika)
+
 templates/              # Folder zawierający szablony HTML
+
     base.html           # Szablon bazowy
+
     index.html          # Strona główna
+
     produkty.html       # Tabela z listą produktów i statusami dostępności
-    szukaj.html         # Strona z wynikami wyszukiwania i licznikiem wyników
+
+    szukaj.html         # Strona z wynikami wyszukiwania i licznikiem 
+    wyników
+
     dodaj1.html         # Formularz dodawania nowego produktu
+
 static/                 # Folder na pliki statyczne
-    style.css           # Arkusz stylów CSS odpowiedzialny za wygląd tabeli i menu
+
+    style.css           # Arkusz stylów CSS odpowiedzialny za wygląd 
+    tabeli i menu
